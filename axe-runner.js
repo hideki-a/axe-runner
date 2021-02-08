@@ -25,12 +25,25 @@ const AxeReports = require('axe-reports');
 
     AxeReports.createCsvReportHeaderRow();
 
-    const sitemap = fs.readFileSync('sitemap.xml', { encoding: "utf-8" });
-    const sitemapJSON = parser.parse(sitemap);
-    const urls = sitemapJSON.urlset.url;
+    const file = process.argv[2] ? process.argv[2] : 'sitemap.xml';
+    const isXML = /\.xml$/.test(file) ? true : false;
+    let urls;
+    if (isXML) {
+        const sitemap = fs.readFileSync(file, { encoding: "utf-8" });
+        const sitemapJSON = parser.parse(sitemap);
+        urls = sitemapJSON.urlset.url;
+    } else {
+        urls = fs.readFileSync(file, { encoding: "utf-8" });
+        urls = urls.replace(/\r\n?/g, '\n');
+        urls = urls.split('\n');
+    }
 
     for (let i = 0, nUrls = urls.length; i < nUrls; i += 1) {
-        const url = urls[i]['loc'];
+        const url = isXML ? urls[i]['loc'] : urls[i];
+        if (!url) {
+            continue;
+        }
+
         promises.push(browser.newPage().then(async page => {
             await page.setBypassCSP(true);
 
