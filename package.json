@@ -1,11 +1,12 @@
 {
   "name": "axe-runner",
   "version": "1.0.1",
-  "description": "",
-  "scripts": {
-    "start": "node axe-runner.js > report/report.csv && nkf -s --overwrite report/report.csv"
-  },
   "author": "Hideki Abe",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js > report/report.csv && nkf -s --overwrite report/report.csv"
+  },
   "dependencies": {
     "axe-core": "^4.1.0",
     "axe-reports": "github:hideki-a/axe-reports#output-all-result-types",
