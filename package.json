@@ -2,16 +2,16 @@
   "name": "axe-runner",
   "version": "1.0.1",
   "author": "Hideki Abe",
-  "description": "",
+  "description": "Run accessibility verification of multiple pages with Puppeteer and axe-core, and output the result to a CSV file.",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js > report/report.csv && nkf -s --overwrite report/report.csv"
-  },
   "dependencies": {
     "axe-core": "^4.1.0",
     "axe-reports": "github:hideki-a/axe-reports#output-all-result-types",
     "fast-xml-parser": "^3.14.0",
+    "iconv-lite": "^0.6.2",
     "puppeteer": "^7.0.0"
   },
-  "private": true
+  "bin": {
+    "axe-runner": "./bin/axe-runner.js"
+  }
 }
