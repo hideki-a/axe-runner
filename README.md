@@ -9,6 +9,15 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 1. `npm i -D hideki-a/axe-runner`でインストールします（npmjs.comへの登録は検討中です）
 1. `npx axe-runner [filename of url list]`を実行します
 
+### Basic認証への対応
+
+`.env`に認証情報を記述します。
+
+```
+BASIC_AUTH_USERNAME=ユーザー名
+BASIC_AUTH_PASSWORD=パスワード
+```
+
 ## 参考サイト
 
 開発にあたり参考にしたサイトです。貴重な情報をありがとうございます。

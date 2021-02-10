@@ -1,3 +1,4 @@
+require('dotenv').config()
 const fs = require('fs');
 const parser = require('fast-xml-parser');
 const puppeteer = require('puppeteer');
@@ -48,6 +49,12 @@ const AxeReports = require('@hideki_a/axe-reports');
             await page.setBypassCSP(true);
 
             // ページ読み込み
+            if (process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD) {
+                await page.authenticate({
+                    username: process.env.BASIC_AUTH_USERNAME,
+                    password: process.env.BASIC_AUTH_PASSWORD
+                });
+            }
             await page.emulate(devicePC);
             await page.goto(`${url}`);
 
