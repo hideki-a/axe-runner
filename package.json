@@ -20,8 +20,8 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
+    "@hideki_a/axe-reports": "^1.1.11",
     "axe-core": "^4.1.0",
-    "axe-reports": "github:hideki-a/axe-reports#output-all-result-types",
     "fast-xml-parser": "^3.14.0",
     "iconv-lite": "^0.6.2",
     "puppeteer": "^7.0.0"
