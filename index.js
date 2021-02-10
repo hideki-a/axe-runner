@@ -3,7 +3,7 @@ const parser = require('fast-xml-parser');
 const puppeteer = require('puppeteer');
 const AXE_SOURCE = require('axe-core').source;
 const AXE_LOCALE_JA = require('axe-core/locales/ja.json');
-const AxeReports = require('axe-reports');
+const AxeReports = require('@hideki_a/axe-reports');
 
 (async () => {
     const promises = [];
