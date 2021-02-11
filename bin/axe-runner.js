@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 const iconv = require('iconv-lite');
 const { Command } = require('commander');
 const program = new Command();
@@ -22,24 +22,30 @@ program
     .action((urlFile, options) => {
         urlFile = urlFile ? urlFile : 'sitemap.xml';
         const device = options.device ? options.device : 'pc';
-        const command = `node ${__dirname}/../index.js ${urlFile} ${device}`;
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-                return;
-            }
-            if (stderr) {
-                console.error(`stderr: ${stderr}`);
-            }
-        
-            if (!error) {
-                if (!fs.existsSync(process.cwd() + '/report')) {
-                    fs.mkdirSync(process.cwd() + '/report');
-                }
-                fs.writeFileSync(
-                    process.cwd() + `/report/report_${dateText}.csv`,
-                    iconv.encode(stdout, 'Shift_JIS')
-                );
+
+        if (!fs.existsSync(process.cwd() + '/report')) {
+            fs.mkdirSync(process.cwd() + '/report');
+        }
+
+        const csvFilePath = process.cwd() + `/report/report_${dateText}.csv`;
+        const csvFile = fs.createWriteStream(csvFilePath);
+        const runner = spawn(
+            'node',
+            [
+                __dirname + '/../index.js',
+                urlFile,
+                device
+            ]
+        );
+        runner.stdout.on('data', data => {
+            csvFile.write(iconv.encode(data, 'Shift_JIS'));
+        });
+        runner.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+        runner.on('close', (code) => {
+            if (code !== 0) {
+                console.log(`child process exited with code ${code}`);
             }
         });
     });
