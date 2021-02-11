@@ -10,6 +10,33 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 1. `npm install --save-dev axe-runner`でインストールします
 1. `npx axe-runner [filename of url list]`を実行します（例： `npx axe-runner urls.txt`）
 
+### エミュレートに使用するデバイスの設定
+
+`-d`オプションで指定します。
+
+`npx axe-runner -d [デバイスの設定] [filename of url list]`
+
+- `-d`オプションを何も指定しない場合はビューポートが幅1280px、高さ800pxのパソコン相当の設定になります
+- `iphone`を指定した場合はiPhone 11（ポートレート表示）相当の設定になります
+- `.json`で終わるファイルパスを指定するとそのファイルの設定を読みこみます
+
+#### デバイスの設定例
+
+```json
+{
+    "name": "iPhone SE landscape",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1",
+    "viewport": {
+      "width": 568,
+      "height": 320,
+      "deviceScaleFactor": 2,
+      "isMobile": true,
+      "hasTouch": true,
+      "isLandscape": true
+    }
+}
+```
+
 ### Basic認証への対応
 
 `.env`に認証情報を記述します。

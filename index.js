@@ -9,20 +9,29 @@ const AxeReports = require('@hideki_a/axe-reports');
 (async () => {
     const promises = [];
     const browser = await puppeteer.launch();
-    // const deviceMobile = puppeteer.devices['iPhone 8'];
-    const userAgentString = await browser.userAgent();
-    const devicePC = {
-        'name': 'Chrome',
-        'userAgent': userAgentString,
-        'viewport': {
-            'width': 1280,
-            'height': 600,
-            'deviceScaleFactor': 1,
-            'isMobile': false,
-            'hasTouch': false,
-            'isLandscape': false
-        }
-    };
+    let device;
+
+    if (process.argv[3].indexOf('.json') > -1) {
+        device = JSON.parse(fs.readFileSync(process.argv[3], {encoding: 'UTF-8'}));
+    } else if (process.argv[3] === 'iphone') {
+        device = puppeteer.devices['iPhone 11'];
+    }
+
+    if (!device) {
+        const userAgentString = await browser.userAgent();
+        device = {
+            name: 'Chrome',
+            userAgent: userAgentString,
+            viewport: {
+                width: 1280,
+                height: 800,
+                deviceScaleFactor: 1,
+                isMobile: false,
+                hasTouch: false,
+                isLandscape: false
+            }
+        };
+    }
 
     AxeReports.createCsvReportHeaderRow();
 
@@ -55,7 +64,7 @@ const AxeReports = require('@hideki_a/axe-reports');
                     password: process.env.BASIC_AUTH_PASSWORD
                 });
             }
-            await page.emulate(devicePC);
+            await page.emulate(device);
             await page.goto(`${url}`);
 
             // axeを注入して実行

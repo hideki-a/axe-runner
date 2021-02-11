@@ -22,6 +22,7 @@
   "dependencies": {
     "@hideki_a/axe-reports": "^1.1.11",
     "axe-core": "^4.1.0",
+    "commander": "^7.0.0",
     "dotenv": "^8.2.0",
     "fast-xml-parser": "^3.14.0",
     "iconv-lite": "^0.6.2",
