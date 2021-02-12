@@ -6,8 +6,16 @@ const AXE_SOURCE = require('axe-core').source;
 const AXE_LOCALE_JA = require('axe-core/locales/ja.json');
 const AxeReports = require('@hideki_a/axe-reports');
 
+// https://www.npmjs.com/package/sleep
+function msleep(n) {
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
+}
+
+function sleep(n) {
+    msleep(n*1000);
+}
+
 (async () => {
-    const promises = [];
     const browser = await puppeteer.launch();
     let device;
 
@@ -59,34 +67,37 @@ const AxeReports = require('@hideki_a/axe-reports');
             continue;
         }
 
-        promises.push(browser.newPage().then(async page => {
-            await page.setBypassCSP(true);
+        const page = await browser.newPage();
+        await page.setBypassCSP(true);
 
-            // ページ読み込み
-            if (process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD) {
-                await page.authenticate({
-                    username: process.env.BASIC_AUTH_USERNAME,
-                    password: process.env.BASIC_AUTH_PASSWORD
-                });
-            }
-            await page.emulate(device);
-            await page.goto(`${url}`);
+        // リクエスト間で少し間を取る
+        if (i !== 0) {
+            sleep(3);
+        }
 
-            // axeを注入して実行
-            await page.evaluate(`eval(${JSON.stringify(AXE_SOURCE)});`);
-            const results = await page.evaluate((config, context, options) => {
-                const { axe } = window;
-                axe.configure(config);
-                return axe.run(context || document, options || {});
-            }, { locale: AXE_LOCALE_JA }, null, { resultTypes: ['violations', 'incomplete', 'inapplicable'] });
+        // ページ読み込み
+        if (process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD) {
+            await page.authenticate({
+                username: process.env.BASIC_AUTH_USERNAME,
+                password: process.env.BASIC_AUTH_PASSWORD
+            });
+        }
+        await page.emulate(device);
+        await page.goto(`${url}`);
 
-            // 結果を確認
-            if (results.violations || results.incomplete || results.inapplicable) {
-                AxeReports.createCsvReportRow(results);
-            }
-        }));
+        // axeを注入して実行
+        await page.evaluate(`eval(${JSON.stringify(AXE_SOURCE)});`);
+        const results = await page.evaluate((config, context, options) => {
+            const { axe } = window;
+            axe.configure(config);
+            return axe.run(context || document, options || {});
+        }, { locale: AXE_LOCALE_JA }, null, { resultTypes: ['violations', 'incomplete', 'inapplicable'] });
+
+        // 結果を確認
+        if (results.violations || results.incomplete || results.inapplicable) {
+            AxeReports.createCsvReportRow(results);
+        }
     }
 
-    await Promise.all(promises);
     await browser.close();
 })();
