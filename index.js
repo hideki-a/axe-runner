@@ -69,6 +69,15 @@ function sleep(n) {
 
         const page = await browser.newPage();
         await page.setBypassCSP(true);
+        page.on('response', response => {
+            if (response.url() === url) {
+                if (response.status() === 401) {
+                    console.error('HTTP 401 Unauthorized -', response.url());
+                } else if (response.status() === 404) {
+                    console.error('HTTP 404 Not Found -', response.url());
+                }
+            }
+        });
 
         // リクエスト間で少し間を取る
         if (i !== 0) {
