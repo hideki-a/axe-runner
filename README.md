@@ -4,7 +4,7 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 
 ## 使用方法
 
-事前に[XML形式のサイトマップ](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap?hl=ja)、もしくは1行1URLでURLを列挙したテキストファイルを準備します。  
+事前にテスト対象のURLを[XML形式のサイトマップ](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap?hl=ja)、もしくは1行1URLでURLを列挙したテキストファイルで準備してください。  
 結果は`report`ディレクトリに格納されます。
 
 1. `npm install --save-dev axe-runner`でインストールします
@@ -19,6 +19,9 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 - `-d`オプションを何も指定しない場合はビューポートが幅1280px、高さ800pxのパソコン相当の設定になります
 - `iphone`を指定した場合はiPhone 11（ポートレート表示）相当の設定になります
 - `.json`で終わるファイルパスを指定するとそのファイルの設定を読みこみます
+
+設定の詳細はPuppeteerの[DeviceDescriptors.ts](https://github.com/puppeteer/puppeteer/blob/main/src/common/DeviceDescriptors.ts)や[page
+.emulate(options)](https://pptr.dev/#?product=Puppeteer&version=v7.0.4&show=api-pageemulateoptions)の情報を参考にしてください。
 
 #### デバイスの設定例
 
@@ -45,6 +48,10 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 BASIC_AUTH_USERNAME=ユーザー名
 BASIC_AUTH_PASSWORD=パスワード
 ```
+
+## 補足
+
+- サーバーへのリクエストを行う際、リクエストとリクエストの間に3秒の待機時間を取ります
 
 ## 参考サイト
 
