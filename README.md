@@ -23,7 +23,8 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 - `.json`で終わるファイルパスを指定するとそのファイルの設定を読みこみます
 
 設定の詳細はPuppeteerの[DeviceDescriptors.ts](https://github.com/puppeteer/puppeteer/blob/main/src/common/DeviceDescriptors.ts)や[page
-.emulate(options)](https://pptr.dev/#?product=Puppeteer&version=v7.0.4&show=api-pageemulateoptions)の情報を参考にしてください。
+.emulate(options)](https://pptr.dev/#?product=Puppeteer&version=v7.0.4&show=api-pageemulateoptions)の情報を参考にしてください。  
+あくまでもユーザーエージェントやビューポートの幅・高さなどが変わるだけで、ブラウザのエンジンが変わるわけではないことに注意してください。
 
 #### デバイスの設定例
 
