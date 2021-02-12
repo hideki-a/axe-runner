@@ -1,5 +1,7 @@
 # axe-runner
 
+[![npm version](https://badge.fury.io/js/axe-runner.svg)](https://badge.fury.io/js/axe-runner)
+
 Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い、結果をCSVファイルに出力します。
 
 ## 使用方法
