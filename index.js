@@ -12,7 +12,12 @@ const AxeReports = require('@hideki_a/axe-reports');
     let device;
 
     if (process.argv[3].indexOf('.json') > -1) {
-        device = JSON.parse(fs.readFileSync(process.argv[3], {encoding: 'UTF-8'}));
+        try {
+            device = JSON.parse(fs.readFileSync(process.argv[3], {encoding: 'UTF-8'}));
+        } catch (error) {
+            console.error('Invalid device definition json.');
+            process.exit(1);
+        }
     } else if (process.argv[3] === 'iphone') {
         device = puppeteer.devices['iPhone 11'];
     }
