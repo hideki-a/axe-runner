@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const { spawn } = require('child_process');
-const iconv = require('iconv-lite');
 const { Command } = require('commander');
 const program = new Command();
 
@@ -29,6 +28,8 @@ program
 
         const csvFilePath = process.cwd() + `/report/report_${dateText}.csv`;
         const csvFile = fs.createWriteStream(csvFilePath);
+        const BOM = '\ufeff';
+        csvFile.write(BOM);
         const runner = spawn(
             'node',
             [
@@ -38,7 +39,7 @@ program
             ]
         );
         runner.stdout.on('data', data => {
-            csvFile.write(iconv.encode(data, 'Shift_JIS'));
+            csvFile.write(data);
         });
         runner.stderr.on('data', (data) => {
             console.error(`stderr: ${data}`);
