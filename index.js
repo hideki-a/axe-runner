@@ -95,12 +95,22 @@ function sleep(n) {
         await page.goto(`${url}`);
 
         // axeを注入して実行
+        // See also: https://www.mitsue.co.jp/knowledge/blog/a11y/201903/07_1700.html
         await page.evaluate(`eval(${JSON.stringify(AXE_SOURCE)});`);
-        const results = await page.evaluate((config, context, options) => {
-            const { axe } = window;
-            axe.configure(config);
-            return axe.run(context || document, options || {});
-        }, { locale: AXE_LOCALE_JA }, null, { resultTypes: ['violations', 'incomplete', 'inapplicable'] });
+        const results = await page.evaluate(
+            (config, context, options = {}) => {
+                const { axe } = window;
+                axe.configure(config);
+                return axe.run(document, options);
+            },
+            {
+                locale: AXE_LOCALE_JA,
+            },
+            null,
+            {
+                resultTypes: ['violations', 'incomplete', 'inapplicable'],
+            }
+        );
 
         // 結果を確認
         if (results.violations || results.incomplete || results.inapplicable) {
