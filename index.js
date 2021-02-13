@@ -19,15 +19,17 @@ function sleep(n) {
     const browser = await puppeteer.launch();
     let device;
 
-    if (process.argv[3].indexOf('.json') > -1) {
-        try {
-            device = JSON.parse(fs.readFileSync(process.argv[3], {encoding: 'UTF-8'}));
-        } catch (error) {
-            console.error('Invalid device definition json.');
-            process.exit(1);
+    if (process.argv.length >= 4) {
+        if (process.argv[3].indexOf('.json') > -1) {
+            try {
+                device = JSON.parse(fs.readFileSync(process.argv[3], {encoding: 'UTF-8'}));
+            } catch (error) {
+                console.error('Invalid device definition json.');
+                process.exit(1);
+            }
+        } else if (process.argv[3] === 'iphone') {
+            device = puppeteer.devices['iPhone 11'];
         }
-    } else if (process.argv[3] === 'iphone') {
-        device = puppeteer.devices['iPhone 11'];
     }
 
     if (!device) {
