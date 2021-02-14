@@ -103,7 +103,7 @@ function sleep(n) {
             (config, context, options = {}) => {
                 const { axe } = window;
                 axe.configure(config);
-                return axe.run(document, options);
+                return axe.run(context || document, options);
             },
             {
                 locale: AXE_LOCALE_JA,
