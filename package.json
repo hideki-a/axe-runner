@@ -23,6 +23,7 @@
     "@hideki_a/axe-reports": "^1.1.11",
     "axe-core": "^4.1.0",
     "commander": "^7.0.0",
+    "deep-extend": "^0.6.0",
     "dotenv": "^8.2.0",
     "fast-xml-parser": "^3.14.0",
     "puppeteer": "^7.0.0"

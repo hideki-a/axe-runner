@@ -1,5 +1,6 @@
 require('dotenv').config()
 const fs = require('fs');
+const deepExtend = require('deep-extend');
 const parser = require('fast-xml-parser');
 const puppeteer = require('puppeteer');
 const AXE_SOURCE = require('axe-core').source;
@@ -17,18 +18,36 @@ function sleep(n) {
 
 (async () => {
     const browser = await puppeteer.launch();
-    let device;
 
-    if (process.argv.length >= 4) {
-        if (process.argv[3].indexOf('.json') > -1) {
-            try {
-                device = JSON.parse(fs.readFileSync(process.argv[3], {encoding: 'UTF-8'}));
-            } catch (error) {
-                console.error('Invalid device definition json.');
-                process.exit(1);
-            }
-        } else if (process.argv[3] === 'iphone') {
-            device = puppeteer.devices['iPhone 11'];
+    // 設定
+    const defaultUserConfigPath = process.cwd() + '/axe-runner.config.js';
+    const defaltConfig = {
+        config: {
+            locale: AXE_LOCALE_JA,
+        },
+        context: null,
+        options: {
+            resultTypes: ['violations', 'incomplete', 'inapplicable'],
+        },
+    };
+    let userConfig;
+    if (process.argv.length >= 4 && process.argv[3]) {
+        const userConfigPath = process.cwd() + '/' + process.argv[3];
+        if (fs.existsSync(userConfigPath)) {
+            userConfig = require(userConfigPath);
+        }
+    } else if (fs.existsSync(defaultUserConfigPath)) {
+        userConfig = require(defaultUserConfigPath);
+    }
+    const execConfig = deepExtend(defaltConfig, userConfig);
+
+    // デバイス定義
+    let device;
+    if (execConfig.device) {
+        if (typeof execConfig.device === 'string') {
+            device = puppeteer.devices[execConfig.device];
+        } else if (typeof execConfig.device === 'object') {
+            device = execConfig.device;
         }
     }
 
@@ -48,6 +67,7 @@ function sleep(n) {
         };
     }
 
+    // アクセシビリティテスト開始
     AxeReports.createCsvReportHeaderRow();
 
     const file = process.argv[2] ? process.argv[2] : 'sitemap.xml';
@@ -105,13 +125,9 @@ function sleep(n) {
                 axe.configure(config);
                 return axe.run(context || document, options);
             },
-            {
-                locale: AXE_LOCALE_JA,
-            },
-            null,
-            {
-                resultTypes: ['violations', 'incomplete', 'inapplicable'],
-            }
+            execConfig.config,
+            execConfig.context,
+            execConfig.options,
         );
 
         // 結果を確認

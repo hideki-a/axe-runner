@@ -14,36 +14,12 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 
 なお、2021年2月9日より前のようにGitHubからコードをダウンロードして`node index.js [filename of url list] > report.csv`でテストを実行することも可能です。この場合、結果のCSVをExcelで開くには[nkf](https://osdn.net/projects/nkf/)などを用いて文字コードをUTF-8 with BOMもしくはShift_JISに変換する必要があります。
 
-### エミュレートに使用するデバイスの設定
+### axeやエミュレートに使用するデバイスの設定
 
-`-d`オプションで指定します。
+カレントディレクトリの`axe-runner.config.js`に記述します。`-c`オプションで別の場所も指定できます。  
+設定方法はWikiの[Config File Example](https://github.com/hideki-a/axe-runner/wiki/Config-File-Example)を参照してください。
 
-`npx axe-runner -d [デバイスの設定] [filename of url list]`
-
-- `-d`オプションを何も指定しない場合はビューポートが幅1280px、高さ800pxのパソコン相当の設定になります
-- `iphone`を指定した場合はiPhone 11（ポートレート表示）相当の設定になります
-- `.json`で終わるファイルパスを指定するとそのファイルの設定を読みこみます
-
-設定の詳細はPuppeteerの[DeviceDescriptors.ts](https://github.com/puppeteer/puppeteer/blob/main/src/common/DeviceDescriptors.ts)や[page
-.emulate(options)](https://pptr.dev/#?product=Puppeteer&version=v7.0.4&show=api-pageemulateoptions)の情報を参考にしてください。  
-あくまでもユーザーエージェントやビューポートの幅・高さなどが変わるだけで、ブラウザのエンジンが変わるわけではないことに注意してください。
-
-#### デバイスの設定例
-
-```json
-{
-    "name": "iPhone SE landscape",
-    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1",
-    "viewport": {
-      "width": 568,
-      "height": 320,
-      "deviceScaleFactor": 2,
-      "isMobile": true,
-      "hasTouch": true,
-      "isLandscape": true
-    }
-}
-```
+`npx axe-runner -c [設定ファイルへの相対パス] [filename of url list]`
 
 ### Basic認証への対応
 

@@ -17,10 +17,10 @@ const dateText = (() => {
 
 program
     .arguments('<urlFile>')
-    .option('-d, --device <value>', 'Device used for emulation.')
+    .option('-c, --config <value>', 'Path to configuration file.')
     .action((urlFile, options) => {
         urlFile = urlFile ? urlFile : 'sitemap.xml';
-        const device = options.device ? options.device : 'pc';
+        const config = options.config ? options.config : '';
 
         if (!fs.existsSync(process.cwd() + '/report')) {
             fs.mkdirSync(process.cwd() + '/report');
@@ -35,7 +35,7 @@ program
             [
                 __dirname + '/../index.js',
                 urlFile,
-                device
+                config,
             ]
         );
         runner.stdout.on('data', data => {
