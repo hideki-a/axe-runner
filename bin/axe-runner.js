@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const fs = require('fs');
-const { spawn } = require('child_process');
 const { Command } = require('commander');
 const program = new Command();
+const runner = require('../lib/runner');
 
 const dateText = (() => {
     const dateObj = new Date();
@@ -20,7 +20,6 @@ program
     .option('-c, --config <value>', 'Path to configuration file.')
     .action((urlFile, options) => {
         urlFile = urlFile ? urlFile : 'sitemap.xml';
-        const config = options.config ? options.config : '';
 
         if (!fs.existsSync(process.cwd() + '/report')) {
             fs.mkdirSync(process.cwd() + '/report');
@@ -30,24 +29,11 @@ program
         const csvFile = fs.createWriteStream(csvFilePath);
         const BOM = '\ufeff';
         csvFile.write(BOM);
-        const runner = spawn(
-            'node',
-            [
-                __dirname + '/../index.js',
-                urlFile,
-                config,
-            ]
-        );
-        runner.stdout.on('data', data => {
-            csvFile.write(data);
-        });
-        runner.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
-        runner.on('close', (code) => {
-            if (code !== 0) {
-                console.log(`child process exited with code ${code}`);
-            }
+        process.stdout.write = csvFile.write.bind(csvFile);
+
+        const runnerPromise = runner(urlFile, options);
+        runnerPromise.then(() => {
+            process.exit(0);
         });
     });
 
