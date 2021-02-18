@@ -29,9 +29,9 @@ program
         const csvFile = fs.createWriteStream(csvFilePath);
         const BOM = '\ufeff';
         csvFile.write(BOM);
-        process.stdout.write = csvFile.write.bind(csvFile);
+        // process.stdout.write = csvFile.write.bind(csvFile);
 
-        const runnerPromise = runner(urlFile, options);
+        const runnerPromise = runner(urlFile, options, csvFile);
         runnerPromise.then(() => {
             process.exit(0);
         });
