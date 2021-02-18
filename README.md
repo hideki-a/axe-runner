@@ -12,8 +12,6 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 1. `npm install --save-dev axe-runner`でインストールします
 1. `npx axe-runner [filename of url list]`を実行します（例： `npx axe-runner urls.txt`）
 
-なお、2021年2月9日より前のようにGitHubからコードをダウンロードして`node index.js [filename of url list] > report.csv`でテストを実行することも可能です。この場合、結果のCSVをExcelで開くには[nkf](https://osdn.net/projects/nkf/)などを用いて文字コードをUTF-8 with BOMもしくはShift_JISに変換する必要があります。
-
 ### axeやエミュレートに使用するデバイスの設定
 
 カレントディレクトリの`axe-runner.config.js`に記述します。`-c`オプションで別の場所も指定できます。  
@@ -32,7 +30,7 @@ BASIC_AUTH_PASSWORD=パスワード
 
 ## 補足
 
-- サーバーへのリクエストを行う際、リクエストとリクエストの間に3秒の待機時間を取ります
+- サーバーへのリクエストを行う際、リクエストとリクエストの間に3秒の待機時間を取ります（調整可能）
 
 ## 参考サイト
 
