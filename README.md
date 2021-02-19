@@ -9,7 +9,7 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 事前にテスト対象のURLを[XML形式のサイトマップ](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap?hl=ja)、もしくは1行1URLでURLを列挙したテキストファイルで準備してください。  
 結果は`report`ディレクトリに格納されます。
 
-1. `npm install --save-dev axe-runner`でインストールします
+1. `npm install axe-runner`でインストールします
 1. `npx axe-runner [filename of url list]`を実行します（例： `npx axe-runner urls.txt`）
 
 ### axeやエミュレートに使用するデバイスの設定
@@ -30,7 +30,7 @@ BASIC_AUTH_PASSWORD=パスワード
 
 ## 補足
 
-- サーバーへのリクエストを行う際、リクエストとリクエストの間に3秒の待機時間を取ります（調整可能）
+- サーバーへのリクエストを行う際、リクエストとリクエストの間に3秒の待機時間を取ります（`interval`で調整可能）
 
 ## 参考サイト
 
