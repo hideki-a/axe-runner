@@ -12,6 +12,8 @@ Puppeteerとaxe-coreで複数ページのアクセシビリティ検証を行い
 1. `npm install axe-runner`でインストールします
 1. `npx axe-runner [filename of url list]`を実行します（例： `npx axe-runner urls.txt`）
 
+※グローバルにインストールした場合は`npx`をつけずに実行します。
+
 ### axeやエミュレートに使用するデバイスの設定
 
 カレントディレクトリの`axe-runner.config.js`に記述します。`-c`オプションで別の場所も指定できます。  
