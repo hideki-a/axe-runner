@@ -1,6 +1,6 @@
 {
   "name": "axe-runner",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "author": "Hideki Abe",
   "description": "Run accessibility verification of multiple pages with Puppeteer and axe-core, and output the result to a CSV file.",
   "repository": {
@@ -20,7 +20,7 @@
   "license": "MIT",
   "main": "lib/runner.js",
   "dependencies": {
-    "@hideki_a/axe-reports": "^1.2.0",
+    "@hideki_a/axe-reports": "^1.2.1",
     "axe-core": "^4.1.0",
     "commander": "^7.0.0",
     "deep-extend": "^0.6.0",
