@@ -20,7 +20,7 @@
   "license": "MIT",
   "main": "lib/runner.js",
   "dependencies": {
-    "@hideki_a/axe-reports": "^1.2.1",
+    "@hideki_a/axe-reports": "^1.2.2",
     "axe-core": "^4.1.0",
     "commander": "^7.0.0",
     "deep-extend": "^0.6.0",
