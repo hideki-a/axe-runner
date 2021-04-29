@@ -32,9 +32,14 @@ program
         // process.stdout.write = csvFile.write.bind(csvFile);
 
         const runnerPromise = runner(urlFile, options, csvFile);
-        runnerPromise.then(() => {
-            process.exit(0);
-        });
+        runnerPromise.then(
+            () => {
+                process.exit(0);
+            },
+            () => {
+                process.exit(0);
+            }
+        );
     });
 
 program.parse();
