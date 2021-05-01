@@ -1,6 +1,6 @@
 {
   "name": "axe-runner",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "author": "Hideki Abe",
   "description": "Run accessibility verification of multiple pages with Puppeteer and axe-core, and output the result to a CSV file.",
   "repository": {
