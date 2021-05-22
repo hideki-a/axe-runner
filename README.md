@@ -47,4 +47,4 @@ BASIC_AUTH_PASSWORD=パスワード
 
 ## 結果を記録したCSVファイル例
 
-<img src="https://www.anothersky.pw/assets/20191030_pic_02_1440w.png" alt="画面キャプチャ：axe-runnerを実行して出力されたCSVの様子" style="width: 640px; height: auto;">
+![画面キャプチャ：axe-runnerを実行して出力されたCSVの様子](https://user-images.githubusercontent.com/829152/119215222-37302780-bb07-11eb-9ab1-94f40ee7e353.png)
