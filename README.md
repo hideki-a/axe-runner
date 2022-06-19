@@ -47,4 +47,4 @@ BASIC_AUTH_PASSWORD=パスワード
 
 ## 結果を記録したCSVファイル例
 
-![画面キャプチャ：axe-runnerを実行して出力されたCSVの様子](https://user-images.githubusercontent.com/829152/119215222-37302780-bb07-11eb-9ab1-94f40ee7e353.png)
+![画面キャプチャ：axe-runnerを実行して出力されたCSVの様子](https://user-images.githubusercontent.com/829152/174462364-b2f5d129-94f8-4f14-9ccc-0aab98a60a34.png)
