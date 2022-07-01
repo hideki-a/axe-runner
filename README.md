@@ -37,6 +37,7 @@ BASIC_AUTH_PASSWORD=パスワード
 ## 補足
 
 - サーバーへのリクエストを行う際、リクエストとリクエストの間に3秒の待機時間を取ります（`interval`で調整可能）
+- テストの内容や関連する達成方法については「[WCAG 2.0達成基準とaxe-core Rule IDの対照表](https://docs.google.com/spreadsheets/d/1uc_re7jxizJ4ACZ8_QfgkKsNGy7PEGOd2LfNWm2VW_U/edit?usp=sharing)」にまとめましたのでご覧ください
 
 ## 参考サイト
 
